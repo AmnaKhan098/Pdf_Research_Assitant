@@ -65,9 +65,7 @@ if uploaded_file is not None:
         st.subheader("✅ Answer:")
         st.write(answer)
 
-# Add a footer with your name
-st.markdown("---")
-st.markdown("<div class='footer'>Made with ❤️ by Amna Khan</div>", unsafe_allow_html=True)
+
 
 
 
