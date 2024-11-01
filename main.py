@@ -40,9 +40,14 @@ def process_pdf(pdf_file):
     return summary, text
 
 # Streamlit application
-st.title("PDF Question-Answer Chatbot")
+st.set_page_config(page_title="PDF QA Chatbot", page_icon="📄", layout="wide")
 
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+# Header and introduction
+st.title("📄 PDF Question-Answer Chatbot")
+st.write("Welcome! Upload your PDF document below, and ask questions about its content. The chatbot will summarize the document and provide answers to your queries.")
+
+# File uploader with styling
+uploaded_file = st.file_uploader("Upload a PDF file", type="pdf", label_visibility="collapsed")
 
 if uploaded_file is not None:
     with open("uploaded.pdf", "wb") as f:
@@ -50,13 +55,19 @@ if uploaded_file is not None:
     
     summary, extracted_text = process_pdf("uploaded.pdf")
     
-    st.subheader("PDF Summary")
+    # Display summary with emphasis
+    st.subheader("📋 PDF Summary")
     st.write(summary)
     
-    user_question = st.text_input("Ask a question about the PDF:")
-    
+    # User question input with placeholder
+    user_question = st.text_input("💬 Ask a question about the PDF:", placeholder="Type your question here...")
+
     if user_question:
         answer = answer_question(user_question, extracted_text)
-        st.subheader("Answer:")
+        st.subheader("✅ Answer:")
         st.write(answer)
+
+# Add a footer
+st.markdown("---")
+st.write("Made with ❤️ by Your Name")
 
