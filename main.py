@@ -33,37 +33,36 @@ def answer_question(question, context):
     )
     return response.choices[0].message.content
 
-# Main function to process PDF
-def process_pdf(pdf_file):
-    text = extract_text_from_pdf(pdf_file)
-    summary = summarize_text(text)
-    return summary, text
-
 # Streamlit application
-st.set_page_config(page_title="PDF QA Chatbot", page_icon="📄", layout="wide")
-st.title("📄 PDF Question-Answer Chatbot")
-st.markdown("<style>h1 {color: #2F4F4F;} h2 {color: #008080;} .footer {text-align: center; margin-top: 20px;}</style>", unsafe_allow_html=True)
+st.title("PDF Question-Answer Chatbot")
+st.markdown("<h5 style='text-align: center;'>Upload a PDF and ask questions!</h5>", unsafe_allow_html=True)
 
-# File uploader with styling
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf", label_visibility="collapsed")
+uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
 
 if uploaded_file is not None:
+    # Save the uploaded PDF to a file
     with open("uploaded.pdf", "wb") as f:
         f.write(uploaded_file.getbuffer())
-    
-    # Summary button
-    if st.button("Generate Summary"):
-        summary, extracted_text = process_pdf("uploaded.pdf")
-        st.subheader("📋 PDF Summary")
-        st.write(summary)
-    
-    # User question input with placeholder
-    user_question = st.text_input("💬 Ask a question about the PDF:", placeholder="Type your question here...")
 
-    if user_question and 'extracted_text' in locals():
+    # Extract text and summarize it
+    extracted_text = extract_text_from_pdf("uploaded.pdf")
+    summary = summarize_text(extracted_text)
+
+    # Display the summary
+    st.subheader("PDF Summary")
+    st.write(summary)
+
+    # Create a text input for user questions
+    user_question = st.text_input("Ask a question about the PDF:")
+    
+    if user_question:
         answer = answer_question(user_question, extracted_text)
-        st.subheader("✅ Answer:")
+        st.subheader("Answer:")
         st.write(answer)
+
+# Footer with your name
+st.markdown("<footer style='text-align: center;'>Created by Amna Khan</footer>", unsafe_allow_html=True)
+
 
 
 
