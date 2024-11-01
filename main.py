@@ -70,7 +70,5 @@ st.markdown("---")
 st.markdown("<div class='footer'>Made with ❤️ by Amna Khan</div>", unsafe_allow_html=True)
 
 
-# Add a footer
-st.markdown("---")
-st.write("Made with ❤️ by Your Name")
+
 
