@@ -55,19 +55,26 @@ if uploaded_file is not None:
 # Summary button
 if st.button("Generate Summary"):
     if st.session_state.extracted_text:
-        st.session_state.summary = summarize_text(st.session_state.extracted_text)
+        if st.session_state.summary == "":
+            st.session_state.summary = summarize_text(st.session_state.extracted_text)
         st.subheader("PDF Summary")
         st.write(st.session_state.summary)
     else:
         st.error("Please upload a PDF file first.")
 
+# Display the summary if it exists
+if st.session_state.summary:
+    st.subheader("PDF Summary")
+    st.write(st.session_state.summary)
+
 # Create a text input for user questions
 user_question = st.text_input("Ask a question about the PDF:")
 
-if user_question and st.session_state.summary:
+if user_question and st.session_state.extracted_text:
     answer = answer_question(user_question, st.session_state.extracted_text)
     st.subheader("Answer:")
     st.write(answer)
 
 # Footer with your name
 st.markdown("<footer style='text-align: center;'>Created by Amna Khan</footer>", unsafe_allow_html=True)
+
