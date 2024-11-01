@@ -41,10 +41,8 @@ def process_pdf(pdf_file):
 
 # Streamlit application
 st.set_page_config(page_title="PDF QA Chatbot", page_icon="📄", layout="wide")
-
-# Header and introduction
 st.title("📄 PDF Question-Answer Chatbot")
-st.write("Welcome! Upload your PDF document below, and ask questions about its content. The chatbot will summarize the document and provide answers to your queries.")
+st.markdown("<style>h1 {color: #2F4F4F;} h2 {color: #008080;} .footer {text-align: center; margin-top: 20px;}</style>", unsafe_allow_html=True)
 
 # File uploader with styling
 uploaded_file = st.file_uploader("Upload a PDF file", type="pdf", label_visibility="collapsed")
@@ -53,19 +51,24 @@ if uploaded_file is not None:
     with open("uploaded.pdf", "wb") as f:
         f.write(uploaded_file.getbuffer())
     
-    summary, extracted_text = process_pdf("uploaded.pdf")
-    
-    # Display summary with emphasis
-    st.subheader("📋 PDF Summary")
-    st.write(summary)
+    # Summary button
+    if st.button("Generate Summary"):
+        summary, extracted_text = process_pdf("uploaded.pdf")
+        st.subheader("📋 PDF Summary")
+        st.write(summary)
     
     # User question input with placeholder
     user_question = st.text_input("💬 Ask a question about the PDF:", placeholder="Type your question here...")
 
-    if user_question:
+    if user_question and 'extracted_text' in locals():
         answer = answer_question(user_question, extracted_text)
         st.subheader("✅ Answer:")
         st.write(answer)
+
+# Add a footer with your name
+st.markdown("---")
+st.markdown("<div class='footer'>Made with ❤️ by Amna Khan</div>", unsafe_allow_html=True)
+
 
 # Add a footer
 st.markdown("---")
