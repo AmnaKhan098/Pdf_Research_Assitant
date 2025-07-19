@@ -54,6 +54,7 @@ Built for researchers, students, and professionals who want to extract insights 
 
 pdf-research-assistant/
 ├── app.py             # Main app logic
+
 ├── pdf_parser.py      # Extracts and splits PDF content
 ├── qa_engine.py       # Question-answering engine using retrieval + LLM
 ├── summarizer.py      # Summarizes document or sections
